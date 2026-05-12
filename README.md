@@ -27,30 +27,15 @@ This project demonstrates a full backend setup including database integration, R
 ---
 
 ## 📁 Project Structure
+
+```text
 app-backend/
-├── index.js # Server entry point
-├── db.js # Database connection (PostgreSQL)
+├── index.js          # Server entry point
+├── db.js             # Database connection (PostgreSQL)
 ├── routes/
-│ └── notes.js # API routes
+│   └── notes.js      # API routes
 ├── Dockerfile
 ├── package.json
 └── README.md
+```text
 
----
-
-## 🔌 API Endpoints
-
-### GET /notes
-Returns all notes from the database.
-
-### POST /notes
-Creates a new note.
-
-Example request body:
-
-```json
-{
-  "text": "My first note"
-}
-docker compose up --build
-http://localhost:3000
