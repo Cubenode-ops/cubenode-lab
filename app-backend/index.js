@@ -11,7 +11,7 @@ app.get("/", (req, res) => {
   res.send("Backend läuft 🚀");
 });
 
-app.listen(3000, () => {
+app.listen(3000, "0.0.0.0", () => {
   console.log("Backend läuft auf Port 3000");
 });
 
