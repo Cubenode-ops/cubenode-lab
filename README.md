@@ -59,7 +59,7 @@ POST /notes
 Body:
 
 {
-  "text": "My new note"
+   "My new note"
 }
 
 ✏️ Update not
@@ -69,7 +69,7 @@ PUT /notes/:id
 Body:
 
 {
-  "text": "Updated note"
+   "Updated note"
 }
 
 ❌ Delete note
@@ -89,7 +89,7 @@ curl http://localhost:3000/notes
 
 curl -X POST http://localhost:3000/notes \
 -H "Content-Type: application/json" \
--d '{"text":"Hello World"}'
+-d '{"Hello World"}'
 
 🎯 What I Learned
 Building REST APIs with Express
