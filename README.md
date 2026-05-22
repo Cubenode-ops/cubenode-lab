@@ -87,7 +87,10 @@ Response:
 ```
 
 ---
-
+JWT Authentication
+Protected API Routes
+Cloud PostgreSQL Integration
+Render Production Deployment
 ## ➕ Create note
 
 ```http
