@@ -4,6 +4,9 @@ const express = require("express");
 const app = express();
 const jwt = require("jsonwebtoken");
 
+// DB
+const pool = require("./db");
+
 app.use(express.json());
 
 // ==========================
@@ -20,6 +23,18 @@ app.use("/auth", authRoutes);
 // ==========================
 app.get("/", (req, res) => {
   res.send("Backend läuft 🚀");
+});
+
+// ==========================
+// TIME ROUTE (POSTGRES TEST)
+// ==========================
+app.get("/time", async (req, res) => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+    res.json(result.rows[0]);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // ==========================
