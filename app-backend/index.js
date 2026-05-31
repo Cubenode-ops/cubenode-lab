@@ -1,33 +1,27 @@
-require("dotenv").config();
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, ".env") });
 
 const express = require("express");
 const app = express();
 const jwt = require("jsonwebtoken");
 
-// DB
 const pool = require("./db");
 
 app.use(express.json());
 
-// ==========================
 // ROUTES
-// ==========================
 const notesRoutes = require("./routes/notes");
 const authRoutes = require("./routes/auth");
 
 app.use("/notes", notesRoutes);
 app.use("/auth", authRoutes);
 
-// ==========================
-// ROOT ROUTE
-// ==========================
+// ROOT
 app.get("/", (req, res) => {
   res.send("Backend läuft 🚀");
 });
 
-// ==========================
-// TIME ROUTE (POSTGRES TEST)
-// ==========================
+// DB TEST
 app.get("/time", async (req, res) => {
   try {
     const result = await pool.query("SELECT NOW()");
@@ -37,9 +31,9 @@ app.get("/time", async (req, res) => {
   }
 });
 
-// ==========================
-// JWT MIDDLEWARE
-// ==========================
+// =========================
+// JWT AUTH MIDDLEWARE (FIXED)
+// =========================
 function authMiddleware(req, res, next) {
   const authHeader = req.headers.authorization;
 
@@ -49,8 +43,13 @@ function authMiddleware(req, res, next) {
 
   const token = authHeader.split(" ")[1];
 
+  if (!token) {
+    return res.status(401).json({ error: "Malformed token" });
+  }
+
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+
     req.user = decoded;
     next();
   } catch (err) {
@@ -58,9 +57,7 @@ function authMiddleware(req, res, next) {
   }
 }
 
-// ==========================
 // PROTECTED ROUTE
-// ==========================
 app.get("/protected", authMiddleware, (req, res) => {
   res.json({
     message: "You are authorized",
@@ -68,12 +65,17 @@ app.get("/protected", authMiddleware, (req, res) => {
   });
 });
 
-// ==========================
+// OPTIONAL: ADMIN TEST ROUTE (für später RBAC)
+app.get("/admin", authMiddleware, (req, res) => {
+  res.json({
+    message: "Admin endpoint reached (no RBAC yet)",
+    user: req.user
+  });
+});
+
 // SERVER
-// ==========================
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, "0.0.0.0", () => {
   console.log("Backend läuft auf Port " + PORT);
 });
-

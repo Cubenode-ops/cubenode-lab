@@ -72,7 +72,83 @@ Database Layer (pg Pool)
 PostgreSQL Database
         ↓
 Render Cloud Infrastructure
+
 ```
+# CubeNode Auth System
+
+## Features
+
+* User Registration
+* User Login
+* JWT Authentication
+* Access Tokens
+* Refresh Tokens
+* Protected Routes
+* PostgreSQL User Storage
+* Password Hashing with bcrypt
+
+## API Endpoints
+
+### Register
+
+POST /auth/register
+
+```json
+{
+  "email": "test@test.com",
+  "password": "123456"
+}
+```
+
+### Login
+
+POST /auth/login
+
+Returns:
+
+```json
+{
+  "accessToken": "...",
+  "refreshToken": "..."
+}
+```
+
+### Refresh Access Token
+
+POST /auth/refresh
+
+```json
+{
+  "refreshToken": "..."
+}
+```
+
+### Protected Route
+
+GET /protected
+
+Header:
+
+```
+Authorization: Bearer <access_token>
+```
+
+Response:
+
+```json
+{
+  "message": "You are authorized"
+}
+```
+
+## Stack
+
+* Node.js
+* Express
+* PostgreSQL
+* Docker
+* JWT
+* bcrypt
 
 ---
 
