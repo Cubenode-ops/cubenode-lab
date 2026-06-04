@@ -8,9 +8,7 @@ const jwt = require("jsonwebtoken");
 const {
   generateAccessToken,
   generateRefreshToken
-require("../../utils/jwt");
-
-
+} = require("../utils/jwt");
 // ==========================
 // REGISTER
 // ==========================

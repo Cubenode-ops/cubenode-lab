@@ -2,12 +2,15 @@ const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, ".env") });
 
 const express = require("express");
-const app = express();
+const cors = require("cors");
 const jwt = require("jsonwebtoken");
 
-const pool = require("./db");
+const app = express();
 
+app.use(cors());
 app.use(express.json());
+
+const pool = require("./db");
 
 // ROUTES
 const notesRoutes = require("./routes/notes");
